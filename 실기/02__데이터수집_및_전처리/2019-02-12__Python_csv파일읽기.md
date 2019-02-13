@@ -65,5 +65,14 @@ Sepal.Length, Sepal.Width, Petal.Length, Petal.Width, Species
 	4.4, 2.9, 1.4, 0.2, setosa
 	4.9, 3.1, 1.5, 0.1, setosa
 	5.4, 3.7, 1.5, 0.2, setosa
+	.
+	.
+	.
+	6.7, 3, 5.2, 2.3, virginica
+	6.3, 2.5, 5, 1.9, virginica
+	6.5, 3, 5.2, 2, virginica
+	6.2, 3.4, 5.4, 2.3, virginica
+	5.9, 3, 5.1, 1.8, virginica
+총 150 개의 데이터가 있습니다.
 ```
 조금..은 예뻐졌다.!!

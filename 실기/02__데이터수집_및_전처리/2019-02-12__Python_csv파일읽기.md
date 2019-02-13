@@ -114,7 +114,7 @@ Sepal.Length, Sepal.Width, Petal.Length, Petal.Width, Species
 조금..은 예뻐졌다.!!  
 .  
 .  
-3. **Pandas로 csv파일 열기**
+3. **Pandas로 csv파일 열기**  
 Pandas패키지를 이용해서 csv파일을 읽어보자.  
 ```python
 import pandas as pd
@@ -153,7 +153,7 @@ R에서 데이터 프레임을 처음 접했었지만 파이썬에도 있었다!
 > 아래와 같이 Excel로 iris.csv에 문자열에 ',' 몇 개를 추가해보자  
 
 ![image](https://user-images.githubusercontent.com/34496143/52689543-e6333f80-2f9d-11e9-9bf2-70aef5242f1a.png)  
-***1번 방식과 동일하게 파일을 열고 출력해보자***
+**1번 방식과 동일하게 파일을 열고 출력해보자**
 ```python
 IRIS_COMMA_FILE = "iris_comma.csv"
 with open(IRIS_COMMA_FILE, 'r', newline="") as file_reader:
@@ -185,7 +185,7 @@ with open(IRIS_COMMA_FILE, 'r', newline="") as file_reader:
 .  
 .  
 .  
-***2번 방법처럼 csv모듈로 파일을 열고 출력해보면***
+**2번 방법처럼 csv모듈로 파일을 열고 출력해보면**
 ```python
 IRIS_COMMA_FILE = "iris_comma.csv"
 with open(IRIS_FILE, 'r', newline='') as csv_file:
@@ -212,7 +212,7 @@ with open(IRIS_FILE, 'r', newline='') as csv_file:
 .  
 .  
 .  
-***3번 방법처럼 Pandas로 파일을 열고 출력해보면***
+**3번 방법처럼 Pandas로 파일을 열고 출력해보면**
 ```python
 import pandas as pd
 

@@ -30,6 +30,9 @@ with open(IRIS_FILE, 'r', newline='') as file_reader:
 ['5.4', '3.9', '1.7', '0.4', '"setosa"']
 ['4.6', '3.4', '1.4', '0.3', '"setosa"']
 ['5', '3.4', '1.5', '0.2', '"setosa"']
+.
+.
+.
 ```
 헤더를 포함한 각 행이 값의 리스트로 표현되는 것을 볼 수 있다.  
 .  
@@ -43,11 +46,11 @@ with open(IRIS_FILE, 'r', newline='') as file_reader:
 ```python
 import csv
 
-f = open('iris.csv','r', encoding="utf-8")
-iris_csv = csv.reader(f)
-for row in iris_csv:
-    print(row)
-f.close()
+IRIS_FILE = "iris.csv"
+with open(IRIS_FILE, 'r', newline='') as csv_file:
+    csv_reader = csv.reader(csv_file, delimiter=",")
+    for row in csv_reader:
+        print(row)
 ```
 출력 값은 다음과 같다
 ```
@@ -62,13 +65,17 @@ f.close()
 ['5', '3.4', '1.5', '0.2', 'setosa']
 ['4.4', '2.9', '1.4', '0.2', 'setosa']
 ['4.9', '3.1', '1.5', '0.1', 'setosa']
+.
+.
+.
 ```
 각 열의 값이 리스트로 출력되는 것을 볼 수 있다.  
 조금 더 예쁘게 출력하고자 한다면  
 ```python
 import csv
 
-with open('iris.csv') as csv_file:
+IRIS_FILE = "iris.csv"
+with open(IRIS_FILE, 'r', newline='') as csv_file:
     csv_reader = csv.reader(csv_file, delimiter=",")
     line_count = 0
     for row in csv_reader:

@@ -39,8 +39,8 @@ with open(IRIS_FILE, 'r', newline='') as file_reader:
 .  
 2. **파이썬에 기본 내장된 csv모듈을 사용하여 csv파일 열기** 
 * CSV 모듈을 사용하여 csv 파일을 읽기 위해서는 먼저 파이썬에 기본 내장된 csv 모듈을 import 한다. 
-* 다음 .csv 파일을 오픈하고 파일객체를 csv.reader(파일객체) 에 넣으면 된다. 
-* csv.reader() 함수는 Iterator 타입인 reader 객체를 리턴하므로 for 루프를 돌며 한 라인씩 가져올 수 있다. 
+* 다음 .csv 파일을 오픈하고 파일객체를 `csv.reader(파일객체)` 에 넣으면 된다. 
+* `csv.reader()` 함수는 Iterator 타입인 reader 객체를 리턴하므로 for 루프를 돌며 한 라인씩 가져올 수 있다. 
 * 이때 리턴되는 각 라인은 컬럼들을 나열한 리스트(list) 타입이다.
 
 ```python
@@ -146,4 +146,97 @@ print(iris_df)
 ```
 여기서 기존의 기본 파이썬, csv 모듈 방식과 다른 점은 `pd.read_csv(IRIS_FILE)`의 리턴 값이 데이터 프레임 이라는 자료형 이라는 것!  
 R에서 데이터 프레임을 처음 접했었지만 파이썬에도 있었다! 역시나..  
-파이썬의 기본 자료형은 아니기 때문에 사용에 유의하자! 나중에 NumPy나오면 한 번 더 얘기하자!
+파이썬의 기본 자료형은 아니기 때문에 사용에 유의하자! 나중에 NumPy나오면 한 번 더 얘기하자!  
+* * *  
+만약 읽어야 하는 csv 파일에 ','가 포함된 값이 있다면(예를 들면 화폐 천단위 구분 '1,000,000')','로 구분하는 csv파일의 문자열 파싱이  
+실패할 수도 있다.  
+> 아래와 같이 Excel로 iris.csv에 문자열에 ',' 몇 개를 추가해보자  
+
+![image](https://user-images.githubusercontent.com/34496143/52689543-e6333f80-2f9d-11e9-9bf2-70aef5242f1a.png)  
+> 1번 방식과 동일하게 파일을 열고 출력해보자
+```python
+IRIS_COMMA_FILE = "iris_comma.csv"
+with open(IRIS_COMMA_FILE, 'r', newline="") as file_reader:
+    header = file_reader.readline()
+    header = header.strip()
+    header_list = header.split(',')
+    print(header_list)
+    for row in file_reader:
+        row = row.strip()
+        row_list = row.split(',')
+        print(row_list)
+```
+출력 값은 다음과 같다.  
+```
+['Sepal.Length', 'Sepal.Width', 'Petal.Length', 'Petal.Width', 'Species']
+['5.1', '3.5', '1.4', '0.2', '"set', 'osa"']
+['4.9', '3', '1.4', '0.2', '"se', 'tos', 'a"']
+['4.7', '3.2', '1.3', '0.2', '"', 'setosa"']
+['4.6', '3.1', '1.5', '0.2', 'setosa']
+['5', '3.6', '1.4', '0.2', 'setosa']
+['5.4', '3.9', '1.7', '0.4', 'setosa']
+['4.6', '3.4', '1.4', '0.3', 'setosa']
+['5', '3.4', '1.5', '0.2', 'setosa']
+.
+.
+.
+```
+1, 2, 3 행을 보면 문자열 'setosa'가 쪼개진 것을 볼 수 있다.  
+.  
+.  
+.  
+> 2번 방법처럼 csv모듈로 파일을 열고 출력해보면  
+```python
+IRIS_COMMA_FILE = "iris_comma.csv"
+with open(IRIS_FILE, 'r', newline='') as csv_file:
+    csv_reader = csv.reader(csv_file, delimiter=",")
+    for row in csv_reader:
+        print(row)
+```
+
+```
+['Sepal.Length', 'Sepal.Width', 'Petal.Length', 'Petal.Width', 'Species']
+['5.1', '3.5', '1.4', '0.2', 'setosa']
+['4.9', '3', '1.4', '0.2', 'setosa']
+['4.7', '3.2', '1.3', '0.2', 'setosa']
+['4.6', '3.1', '1.5', '0.2', 'setosa']
+['5', '3.6', '1.4', '0.2', 'setosa']
+['5.4', '3.9', '1.7', '0.4', 'setosa']
+['4.6', '3.4', '1.4', '0.3', 'setosa']
+['5', '3.4', '1.5', '0.2', 'setosa']
+.
+.
+.
+```
+1, 2, 3 행의 'setosa'문자열이 잘 출력되는 것을 볼 수 있다. csv모듈은 임의적이고 복잡한 csv파일을 처리하도록 설계되어 있음을 알 수 있다.  
+.  
+.  
+.  
+> 3번 방법처럼 Pandas로 파일을 열고 출력해보면
+```python
+import pandas as pd
+
+IRIS_COMMA_FILE = "iris_comma.csv"
+iris_df = pd.read_csv(IRIS_COMMA_FILE)
+print(iris_df)
+```
+리턴 값은 다음과 같다.
+```
+     Sepal.Length  Sepal.Width  Petal.Length  Petal.Width    Species
+0             5.1          3.5           1.4          0.2    set,osa
+1             4.9          3.0           1.4          0.2   se,tos,a
+2             4.7          3.2           1.3          0.2    ,setosa
+3             4.6          3.1           1.5          0.2     setosa
+4             5.0          3.6           1.4          0.2     setosa
+5             5.4          3.9           1.7          0.4     setosa
+6             4.6          3.4           1.4          0.3     setosa
+7             5.0          3.4           1.5          0.2     setosa
+.
+.
+.
+```
+1, 2, 3 행의 'setosa'문자열이 ','를 포함한 채로 값이 출력되는 것을 볼 수 있다.  
+.  
+.  
+.  
+csv파일을 읽는 다양한 방법 그리고 각 방법마다 조금의 차이를 인지하고 상황에 맞게 사용하면 될 것이다.
